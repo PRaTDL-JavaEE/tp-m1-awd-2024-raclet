@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+  <title>Friends of Mine</title>
+  <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<h2>Liste des Articles</h2>
+<table class="w3-table-all w3-hoverable">
+  <tr>
+    <th>Id</th>
+    <th>Titre</th>
+    <th>Catégorie</th>
+  </tr>
+  <tr th:each="art : ${articles}">
+    <td th:text="${art.articleId}"></td>
+    <td th:text="${art.title}"></td>
+    <td th:text="${art.category}"></td>
+  </tr>
+</table>
+
+
+</body>
+</html>
