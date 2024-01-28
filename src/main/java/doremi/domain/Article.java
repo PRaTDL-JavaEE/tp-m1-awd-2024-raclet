@@ -1,9 +1,16 @@
 package doremi.domain;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
 public class Article {
 
+    @PositiveOrZero
     private int articleId;
 
+    @NotNull
+    @Size(min = 1, max = 64)
     private String title;
 
     private String category;
@@ -38,6 +45,10 @@ public class Article {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean equals(Object obj) {
+        return (obj instanceof Article) && (articleId == ((Article) obj).getArticleId());
     }
 
 }
