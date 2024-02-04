@@ -18,6 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest
 @Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ArticleServiceIntegrationTest {
 
     @Autowired
@@ -75,7 +76,7 @@ public class ArticleServiceIntegrationTest {
                 () -> { articleService.saveArticle(new Article(1, "titre", "categorie")); });
     }
 
-    @Test  @DirtiesContext
+    @Test
     public void testSaveIsSaved() {
         // when: une requête pour sauver un article en base est émise
         Article a = new Article (125, "Titre", "Categorie");
@@ -85,7 +86,7 @@ public class ArticleServiceIntegrationTest {
         Assertions.assertEquals(a, articleService.saveArticle(a));
     }
 
-    @Test  @DirtiesContext
+    @Test
     public void testSaveIsSavedCardinal() {
         // given : la taille de la base
         int before = (articleService.findAllArticles()).size();
