@@ -6,6 +6,8 @@ import doremi.repositories.BandAlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BandAlbumService {
 
@@ -26,6 +28,10 @@ public class BandAlbumService {
 
     public Band findBandById(Long id) {
         return bandAlbumRepository.findBandById(id);
+    }
+
+    public List<Band> findAllBand() {
+        return bandAlbumRepository.findAllBand();
     }
 
     public BandAlbumRepository getBandAlbumRepository() {
