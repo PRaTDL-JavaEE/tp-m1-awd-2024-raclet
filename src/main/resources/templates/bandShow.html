@@ -4,6 +4,8 @@
 <head lang="en">
   <title>Do-Ré-Mi</title>
   <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue@3"></script>
 </head>
 
 <body>
@@ -43,6 +45,54 @@
     <p th:each="album : ${band.albums}" th:text="${album.title}"></p>
   </div>
 </div>
+
+<br>
+
+<div id="app">
+  <h2>  Additional informations powered by MusicBrainz:</h2>
+
+  <div class="w3-cell-row">
+    <div class="w3-container w3-cell" style="width:20%">
+      <p>Country :</p>
+    </div>
+    <div class="w3-container w3-cell">
+      <p>{{infos.country}}</p>
+    </div>
+  </div>
+  <div class="w3-cell-row">
+    <div class="w3-container w3-cell" style="width:20%">
+      <p>Artist page on Musicbrainz :</p>
+    </div>
+    <div class="w3-container w3-cell">
+      <p><a v-bind:href="'https://musicbrainz.org/artist/'+infos.id">link</a></p>
+    </div>
+  </div>
+  <br>
+  <img src="https://staticbrainz.org/MB/header-logo-1f7dc2a.svg"/>
+  <br><br>
+
+</div>
+
+<script th:inline="javascript">
+  Vue.createApp({
+    data() {
+      return {
+        bandName: [[${band.name}]],
+        infos: []
+      }
+    },
+    created() {
+      console.log(this.bandName)
+      const request= 'https://musicbrainz.org/ws/2/artist/?query=name:'+this.bandName+'&fmt=json'
+      axios.get(request)
+              .then(response => this.infos = response.data.artists[0]
+              )
+              .catch(e => {
+                this.errors.push(e)
+              })
+    }
+  }).mount('#app')
+</script>
 
 </body>
 </html>
