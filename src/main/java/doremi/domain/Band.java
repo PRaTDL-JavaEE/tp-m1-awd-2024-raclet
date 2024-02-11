@@ -1,5 +1,6 @@
 package doremi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -21,7 +22,7 @@ public class Band {
 
     private boolean active;
 
-    @OneToMany(mappedBy = "band")
+    @OneToMany(mappedBy = "band") @JsonIgnore
     private Collection<Album> albums = new ArrayList<>();
 
     public Band() { }

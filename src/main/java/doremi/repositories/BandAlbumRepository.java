@@ -68,6 +68,10 @@ public class BandAlbumRepository {
         return query.getResultList();
     }
 
+    public List<Album> findAlbumsByYear(int year) {
+        return entityManager.createQuery("select a from Album a where a.year = :year", Album.class).setParameter("year", year).getResultList();
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }

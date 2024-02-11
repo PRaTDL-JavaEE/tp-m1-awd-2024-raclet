@@ -42,6 +42,8 @@ public class BandAlbumService {
         return bandAlbumRepository.findAllActiveBands(active);
     }
 
+    public List<Album> findAlbumsByYear(int year) { return bandAlbumRepository.findAlbumsByYear(year); }
+
     public BandAlbumRepository getBandAlbumRepository() {
         return bandAlbumRepository;
     }
