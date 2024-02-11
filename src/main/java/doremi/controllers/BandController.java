@@ -60,4 +60,19 @@ public class BandController {
         return "bandForm";
     }
 
+    @GetMapping("band/delete/{id}")
+    public String deleteBand(@PathVariable Long id, Model model){
+        Band band = bandAlbumService.findBandById(id);
+        if (band == null) {
+            model.addAttribute("customMessage", "Impossible. Id non valide");
+            return "error";
+        }
+        if (band.getAlbums().size() != 0) {
+            model.addAttribute("customMessage", "Impossible. Le groupe est associé à un album.");
+            return "error";
+        }
+        bandAlbumService.deleteBandById(id);
+        return "redirect:/bands";
+    }
+
 }
