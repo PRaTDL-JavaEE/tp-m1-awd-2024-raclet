@@ -129,4 +129,33 @@ public class BandControllerIntegrationTest {
                         .or(containsString("ne doit pas être vide"))))
                 .andDo(print());
     }
+
+    @Test
+    public void testEditBandIdValide() throws Exception{
+        // given: un objet MockMvc qui simulate des échanges MVC
+        // when: on simule du requête HTTP de type GET vers "/band/edit/{id}" avec un id valide
+        // then: la requête est acceptée (status OK)
+        // then: la vue "bandForm" comporte les infos de lu groupe dont l'id est id
+        Long savId = band.getId();
+        mockMvc.perform(get("/band/edit/" + savId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("bandForm"))
+                .andExpect(content().string(Matchers.containsString(band.getName())))
+                .andExpect(model().attribute("band", hasProperty("id", is(savId))))
+                .andDo(print());
+    }
+
+    @Test
+    public void testEditBandIdInvalide() throws Exception{
+        // given: un objet MockMvc qui simulate des échanges MVC
+        // when: on simule du requête HTTP de type GET vers "/band/edit/{id}" avec un id invalide
+        // then: la requête est acceptée (status OK)
+        // then: la vue "error" est rendue
+        mockMvc.perform(get("/band/edit/" + Integer.MAX_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("error"))
+                .andDo(print());
+    }
 }
