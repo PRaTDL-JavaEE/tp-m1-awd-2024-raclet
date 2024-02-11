@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+  <title>Do-Ré-Mi</title>
+  <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<h2>Liste des Groupes</h2>
+<table class="w3-table-all w3-hoverable">
+  <tr>
+    <th>Id</th>
+    <th>Nom</th>
+    <th>Actif ?</th>
+  </tr>
+  <tr th:each="band : ${bands}">
+    <td th:text="${band.id}"></td>
+    <td th:text="${band.name}"></td>
+    <td th:text="${band.active} ? 'oui' : 'non'"></td>
+    <td><form th:method="get" th:action="${ '/band/' + band.id}">
+      <button class="w3-button w3-black" type="submit">Voir</button>
+    </form></td>
+    <td><form th:method="get" th:action="${'/band/edit/' + band.id}">
+      <button class="w3-button w3-black" type="submit">Editer</button>
+    </form></td>
+    <td><form th:method="get" th:action="${'/band/delete/' + band.id}">
+      <button class="w3-button w3-black" type="submit">Suppression</button>
+    </form></td>
+  </tr>
+</table>
+
+</body>
+</html>
