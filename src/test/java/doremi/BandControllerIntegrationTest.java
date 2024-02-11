@@ -193,5 +193,47 @@ public class BandControllerIntegrationTest {
         assertEquals(count, bandAlbumService.findAllBand().size());
     }
 
+    @Test
+    public void testFindBandActif() throws Exception {
+        // given: un objet MockMvc qui simulate des échanges MVC
+        // when: on simule du requête HTTP de type GET vers "/bands/search?active=Y"
+        // then: la requête est acceptée (status OK)
+        // then: la vue "bands" est rendue
+        // then : le code HTML de la vue ne comporte pas la balise  <td>non</td>
+        mockMvc.perform(get("/bands/search?active=Y"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("bands"))
+                .andExpect(content().string(Matchers.not(Matchers.containsString("<td>non</td>"))))
+                .andDo(print());
+    }
+
+    @Test
+    public void testFindBandInactif() throws Exception {
+        // given: un objet MockMvc qui simulate des échanges MVC
+        // when: on simule du requête HTTP de type GET vers "/bands/search?active=N"
+        // then: la requête est acceptée (status OK)
+        // then: la vue "bands" est rendue
+        // then : le code HTML de la vue ne comporte pas la balise  <td>oui</td>
+        mockMvc.perform(get("/bands/search?active=N"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("bands"))
+                .andExpect(content().string(Matchers.not(Matchers.containsString("<td>oui</td>"))))
+                .andDo(print());
+    }
+
+    @Test
+    public void testFindBandParamFaux() throws Exception {
+        // given: un objet MockMvc qui simulate des échanges MVC
+        // when: on simule du requête HTTP de type GET vers "/bands/search?active=W"
+        // then: la requête est acceptée (status OK)
+        // then: la vue "bands" est rendue
+        mockMvc.perform(get("/bands/search?active=W"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("bands"))
+                .andDo(print());
+    }
 
 }

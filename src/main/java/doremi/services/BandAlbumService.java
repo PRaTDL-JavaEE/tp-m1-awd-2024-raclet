@@ -38,6 +38,10 @@ public class BandAlbumService {
         bandAlbumRepository.deleteBandById(id);
     }
 
+    public List<Band> findAllActiveBands(boolean active) {
+        return bandAlbumRepository.findAllActiveBands(active);
+    }
+
     public BandAlbumRepository getBandAlbumRepository() {
         return bandAlbumRepository;
     }

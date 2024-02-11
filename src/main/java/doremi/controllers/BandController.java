@@ -10,6 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class BandController {
@@ -73,6 +76,19 @@ public class BandController {
         }
         bandAlbumService.deleteBandById(id);
         return "redirect:/bands";
+    }
+
+    @GetMapping("bands/search")
+    public String searchBands(@RequestParam(value = "active",required = true) String active, Model model) {
+        List<Band> band;
+        if (active.equals("Y"))
+            band = bandAlbumService.findAllActiveBands(true);
+        else if (active.equals("N"))
+            band = bandAlbumService.findAllActiveBands(false);
+        else
+            band = bandAlbumService.findAllBand();
+        model.addAttribute("bands", band);
+        return "bands";
     }
 
 }

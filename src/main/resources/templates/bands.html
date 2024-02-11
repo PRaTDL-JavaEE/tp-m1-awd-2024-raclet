@@ -32,5 +32,25 @@
   </tr>
 </table>
 
+<h3>Filtrer :</h3>
+
+<div class="w3-container w3-cell">
+  <p>
+  <form th:method="get" th:action="${'/bands/search'}">
+    <input type="hidden" name="active" value="Y" />
+    <button class="w3-button w3-black" type="submit">Actif uniquement</button>
+  </form>
+  </p>
+</div>
+
+<div class="w3-container w3-cell">
+  <p>
+  <form th:method="get" th:action="${'/bands/search'}">
+    <input type="hidden" name="active" value="N" />
+    <button class="w3-button w3-black" type="submit">Inactif uniquement</button>
+  </form>
+  </p>
+</div>
+
 </body>
 </html>
