@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+
+<head>
+  <title>Do-Ré-Mi</title>
+  <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<h2>Création d'un groupe</h2>
+<form class="w3-container" th:object="${band}" th:action="@{/band}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+  <p>
+    <label>Nom :
+      <input class="w3-input" type="text" style="width:50%" th:field="*{name}" />
+    </label>
+  </p>
+  <p class="w3-large w3-text-red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Erreur sur le nom</p>
+  <p>
+    <label>Actif :
+      <select class="w3-select" name="actif" style="width:5%" th:field="*{active}">
+        <option value="true">oui</option>
+        <option value="false">non</option>
+      </select>
+    </label>
+  </p>
+  <button class="w3-button">Envoyer</button>
+</form>
+</body>
+</html>
